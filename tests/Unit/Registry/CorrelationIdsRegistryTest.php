@@ -51,6 +51,10 @@ class CorrelationIdsRegistryTest extends TestCase
     {
         $subject = new CorrelationIdsRegistry('old_current');
 
+        $this->assertEquals('old_current', $subject->getCurrentCorrelationId());
+        $this->assertNull($subject->getParentCorrelationId());
+        $this->assertNull($subject->getRootCorrelationId());
+
         $subject->update(new CorrelationIdsRegistry('new_current', 'new_parent', 'new_root'));
 
         $this->assertEquals('new_current', $subject->getCurrentCorrelationId());
