@@ -51,9 +51,17 @@ class CorrelationIdsRegistryBuilder
 
     public function buildFromRequestHeaders(array $requestHeaders): CorrelationIdsRegistryInterface
     {
+        $sanitizedRequestHeaders = $this->sanitizeRequestHeaders($requestHeaders);
+
         return $this->build(
-            $this->extractRequestHeader($requestHeaders, $this->provider->provideParentCorrelationIdHeaderName()),
-            $this->extractRequestHeader($requestHeaders, $this->provider->provideRootCorrelationIdHeaderName())
+            $this->extractRequestHeader(
+                $sanitizedRequestHeaders,
+                $this->sanitize($this->provider->provideParentCorrelationIdHeaderName())
+            ),
+            $this->extractRequestHeader(
+                $sanitizedRequestHeaders,
+                $this->sanitize($this->provider->provideRootCorrelationIdHeaderName())
+            )
         );
     }
 
@@ -62,5 +70,21 @@ class CorrelationIdsRegistryBuilder
         $value = $requestHeaders[$headerName] ?? null;
 
         return is_array($value) ? implode(',', $value) : $value;
+    }
+
+    private function sanitizeRequestHeaders(array $requestHeaders): array
+    {
+        $sanitizedRequestHeaders = [];
+
+        foreach ($requestHeaders as $key => $value) {
+            $sanitizedRequestHeaders[$this->sanitize($key)] = $value;
+        }
+
+        return $sanitizedRequestHeaders;
+    }
+
+    private function sanitize(string $value): string
+    {
+        return strtolower($value);
     }
 }
