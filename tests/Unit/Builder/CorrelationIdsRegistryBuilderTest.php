@@ -71,4 +71,32 @@ class CorrelationIdsRegistryBuilderTest extends TestCase
         $this->assertEquals('parent', $result->getParentCorrelationId());
         $this->assertEquals('root1,root2', $result->getRootCorrelationId());
     }
+
+    public function testBuildFromRequestHeadersWithSanitization(): void
+    {
+        $this->generatorMock
+            ->expects($this->once())
+            ->method('generate')
+            ->willReturn('current');
+
+        $this->providerMock
+            ->expects($this->once())
+            ->method('provideParentCorrelationIdHeaderName')
+            ->willReturn('parent-header-name');
+
+        $this->providerMock
+            ->expects($this->once())
+            ->method('provideRootCorrelationIdHeaderName')
+            ->willReturn('root-header-name');
+
+        $result = $this->subject->buildFromRequestHeaders([
+            'Parent-Header-Name' => 'parent',
+            'Root-Header-Name' => ['root1', 'root2']
+        ]);
+
+        $this->assertInstanceOf(CorrelationIdsRegistryInterface::class, $result);
+        $this->assertEquals('current', $result->getCurrentCorrelationId());
+        $this->assertEquals('parent', $result->getParentCorrelationId());
+        $this->assertEquals('root1,root2', $result->getRootCorrelationId());
+    }
 }
