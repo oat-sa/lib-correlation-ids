@@ -56,7 +56,7 @@ class CorrelationIdsRegistryBuilder
         return $this->build(
             $this->extractRequestHeader(
                 $sanitizedRequestHeaders,
-                $this->sanitize($this->provider->provideParentCorrelationIdHeaderName())
+                $this->sanitize($this->provider->provideCurrentCorrelationIdHeaderName())
             ),
             $this->extractRequestHeader(
                 $sanitizedRequestHeaders,

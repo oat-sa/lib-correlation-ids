@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.1.2
+-----
+
+* Fixed shifting "current id" header to "parent id". 
+
 0.1.1
 -----
 
