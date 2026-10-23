@@ -31,8 +31,8 @@ class CorrelationIdsRegistry implements CorrelationIdsRegistryInterface
 
     public function __construct(
         string $currentCorrelationId,
-        string $parentCorrelationId = null,
-        string $rootCorrelationId = null
+        ?string $parentCorrelationId = null,
+        ?string $rootCorrelationId = null
     ) {
         $this->currentCorrelationId = $currentCorrelationId;
         $this->parentCorrelationId = $parentCorrelationId;

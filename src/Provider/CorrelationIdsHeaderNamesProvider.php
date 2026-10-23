@@ -30,9 +30,9 @@ class CorrelationIdsHeaderNamesProvider implements CorrelationIdsHeaderNamesProv
     private $rootCorrelationIdHeaderName;
 
     public function __construct(
-        string $currentCorrelationIdHeaderName = null,
-        string $parentCorrelationIdHeaderName= null,
-        string $rootCorrelationIdHeaderName= null
+        ?string $currentCorrelationIdHeaderName = null,
+        ?string $parentCorrelationIdHeaderName = null,
+        ?string $rootCorrelationIdHeaderName = null
     ) {
         $this->currentCorrelationIdHeaderName = $currentCorrelationIdHeaderName ?? self::DEFAULT_CURRENT_CORRELATION_ID_HEADER_NAME;
         $this->parentCorrelationIdHeaderName = $parentCorrelationIdHeaderName ?? self::DEFAULT_PARENT_CORRELATION_ID_HEADER_NAME;
