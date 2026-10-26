@@ -34,13 +34,13 @@ class CorrelationIdsRegistryBuilder
 
     public function __construct(
         CorrelationIdGeneratorInterface $generator,
-        CorrelationIdsHeaderNamesProviderInterface $provider = null
+        ?CorrelationIdsHeaderNamesProviderInterface $provider = null
     ) {
         $this->generator = $generator;
         $this->provider = $provider ?? new CorrelationIdsHeaderNamesProvider();
     }
 
-    public function build(string $parentCorrelationId = null, string $rootCorrelationId = null): CorrelationIdsRegistryInterface
+    public function build(?string $parentCorrelationId = null, ?string $rootCorrelationId = null): CorrelationIdsRegistryInterface
     {
         return new CorrelationIdsRegistry(
             $this->generator->generate(),
